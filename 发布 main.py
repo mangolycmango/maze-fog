@@ -15,9 +15,6 @@ def main():
     goal = "🔷"
     zd = "💣"
 
-    cnt = 0
-
-    xtc = {}
 
 
     def clear_screen():
@@ -47,7 +44,7 @@ def main():
         return player, target, walls
 
 
-    def print_board(pos, show_all_walls=0):
+    def print_board(pos, xtc,show_all_walls=0):
         """渲染迷宫地图"""
         hit_walls = list(xtc.keys())
         for i in range(1, k + 1):
@@ -69,7 +66,9 @@ def main():
 
 
     def main():
-        global player, target, walls, zdxy, cnt, xtc
+        xtc = {}
+        global player, target, walls, zdxy
+        cnt = 0
         player, target, walls = generate_positions()
         tim = time.time()
         zdxy = []
@@ -96,7 +95,7 @@ def main():
 
             clear_screen()
             print(f"移动次数：{cnt}\n时间:{time.time() - tim:.2f}秒")
-            print_board(player)
+            print_board(player,xtc)
 
             a = input("1:⬅️ 2:➡️ 3:⬆️ 4:⬇️ 0:退出 : ")
             if not a.isdigit():
@@ -105,7 +104,7 @@ def main():
             a = int(a)
 
             if a == 5:
-                print_board(player, show_all_walls=1)
+                print_board(player, xtc,show_all_walls=1)
             if a == 6:
                 try:
                     print(eval(input()))
@@ -152,7 +151,7 @@ def main():
 
             if player == target:
                 clear_screen()
-                print_board(startplayer, show_all_walls=True)
+                print_board(startplayer, xtc,show_all_walls=True)
                 x = time.time()
                 print(f"🎉 恭喜！你用了 {cnt + 1} 步,{x - tim:.2f}秒到达目标！平均每步耗时{(x - tim) * 1.0 / (cnt + 1):.2f}秒")
                 break
